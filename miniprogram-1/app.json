@@ -1,0 +1,27 @@
+{
+  "pages": ["pages/index/index"],
+  "window": {
+    "navigationBarTitleText": "城市打卡地图",
+    "navigationBarBackgroundColor": "#4a90e2",
+    "navigationBarTextStyle": "white"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "需要获取您的位置以提供地图服务"
+    }
+  },
+  "requiredPrivateInfos": ["getLocation"],
+  "networkTimeout": {
+    "request": 15000
+  },
+  "mp-weixin": {
+    "appid": "wxc4a1c1c184f921ae",
+    "requestDomain": [
+      "https://apis.map.qq.com",
+      "https://rt0.map.gtimg.com",
+      "https://rt1.map.gtimg.com",
+      "https://rt2.map.gtimg.com",
+      "https://rt3.map.gtimg.com"
+    ]
+  }
+}

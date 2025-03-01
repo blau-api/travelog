@@ -1,0 +1,74 @@
+<!-- 用户信息模块 -->
+<view class="user-section">
+  <view class="avatar-wrapper">
+    <button 
+      wx:if="{{!hasUserInfo}}" 
+      class="avatar-button" 
+      open-type="chooseAvatar" 
+      bindchooseavatar="onChooseAvatar"
+    >
+      <image class="avatar-img" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+    </button>
+    <image wx:else class="avatar-img" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+  </view>
+  <input 
+    class="nickname-input"
+    type="nickname"
+    placeholder="请输入昵称"
+    value="{{userInfo.nickName}}"
+    bindinput="onInputChange"
+  />
+</view>
+
+<!-- 地图显示区域 -->
+<view class="map-wrapper">
+  <map
+    id="cityMap"
+    latitude="{{latitude}}"
+    longitude="{{longitude}}"
+    scale="14"
+    show-location
+    polygons="{{polygons}}"
+    bindregionchange="handleMapMove"
+    style="width: 100%; height: 70vh;"
+    setting="{{settings}}"
+  >
+    <view class="map-controls">
+      <image 
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACHSURBVHgB7dZBCsAgDATQmaD3P+oFPKjYblbQCtb5QMCEl0XAIEnSJ5YrSx0j6hEwO0O8HduZP5oJkKQvGeB6t2UAAAD//+xdjB0T6C3ZAAAAAElFTkSuQmCC" 
+        class="recenter-btn"
+        bindtap="handleRecenter"
+      />
+      <view class="counter-badge">
+        🌍 已打卡 {{cityCount}} 城
+      </view>
+    </view>
+  </map>
+</view>
+
+<!-- 城市打卡列表 -->
+<view class="city-list">
+  <view class="list-header">
+    <text class="header-title">我的旅行足迹</text>
+  </view>
+  
+  <scroll-view scroll-y class="list-container">
+    <block wx:for="{{cityData}}" wx:key="cityName">
+      <view class="city-item" bindtap="focusCity" data-city="{{item.cityName}}">
+        <view class="city-info">
+          <text class="city-name">{{item.cityName}}</text>
+          <text class="city-time">首访时间：{{formatDate(item.firstCheckin)}}</text>
+        </view>
+        <text class="city-count">到访{{item.count}}次</text>
+      </view>
+    </block>
+    
+    <view wx:if="{{cityData.length === 0}}" class="empty-tip">
+      🌍 点击下方按钮记录第一次打卡
+    </view>
+  </scroll-view>
+  
+  <button class="checkin-btn" bindtap="handleCityCheckin">
+    🌟 立即打卡当前城市
+  </button>
+</view>
